@@ -2,6 +2,17 @@ import { useState } from "react";
 
 import "./App.css";
 import { useForm } from "react-hook-form";
+// React (Required)
+import "@dds/react/css/dds-components.css";
+// Foundations (Highly recommended)
+import "@dds/react/css/dds-reboot.css";
+import "@dds/react/css/dds-fonts.css";
+import "@dds/react/css/dds-icons.css";
+// Foundations (Optional)
+import "@dds/react/css/dds-main.css";
+import "@dds/react/css/dds-helpers.css";
+import "@dds/react/css/dds-templates.css";
+import { DDSInput } from "@dds/react";
 
 function App() {
   const {
@@ -30,37 +41,37 @@ function App() {
     console.log(data, res);
   };
 
+  const serviceTag = register("serviceTag", {
+    required: { value: true, message: "This field is required" },
+    maxLength: {
+      value: 7,
+      message: "The exact length should be 7 characters",
+    },
+    minLength: {
+      value: 7,
+      message: "The exact length should be 7 characters",
+    },
+  });
+
   return (
     <>
       {isSubmitting && <p>Loading...</p>}
       <div className="container">
         <form action="" onSubmit={handleSubmit(onSubmit)}>
-          <input
-            placeholder="Service Tag#"
-            {...register("serviceTag", {
-              required: { value: true, message: "This field is required" },
-              maxLength: {
-                value: 7,
-                message: "The exact length should be 7 characters",
-              },
-              minLength: {
-                value: 7,
-                message: "The exact length should be 7 characters",
-              },
-            })}
-            type="text"
-          />
+          <input placeholder="Service Tag#" {...serviceTag} type="text" />
           {errors.serviceTag && <p>{errors.serviceTag.message}</p>}
           <br />
           <input
             placeholder="Server Model Name"
+            // style={{ backgroundColor: "#a8396f" }}
             {...register("serverModel")}
+            errorMessage={errors.serviceTag?.message}
             type="text"
           />
           <br />
           <input
             placeholder="Server Generation"
-            {...register("serverGeneration")}
+            {...register("serverGen")}
             type="text"
           />
           <br />
@@ -72,7 +83,7 @@ function App() {
           <br />
           <input
             placeholder="Server Ship Date (YYYY)"
-            {...register("serverShipDate")}
+            {...register("serverShippedDate")}
             type="date"
           />
           <br />
